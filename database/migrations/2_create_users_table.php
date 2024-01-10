@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('lastname')->unique();
             $table->string('firstname')->unique();
             $table->string('adress')->unique();
-            $table->unsignedInteger('zipcode')->unique();
+            $table->string('zipcode');
             $table->string('city')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

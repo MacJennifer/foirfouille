@@ -13,13 +13,13 @@ class ProductFactory extends Factory
 
     public function definition()
     {
-        $categoryIds = Categorie::pluck('id')->toArray();
+        $categorieId = Categorie::inRandomOrder()->value('id') ?: Categorie::factory()->create()->id;
         return [
             'name' => $this->faker->word,
             'image' => $this->faker->imageUrl(),
             'description' => $this->faker->paragraph,
             'price' => $this->faker->randomFloat(2, 10, 100),
-            'categorie_id' => $this->faker->randomElement($categoryIds)
+            'categorie_id' => $categorieId,
         ];
     }
 }
