@@ -16,9 +16,17 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
      */
+    use HasFactory;
+
     protected $fillable = [
-        'name',
+
+        'lastname',
+        'firstname',
+        'adress',
+        'zipcode',
+        'city',
         'email',
         'password',
     ];
@@ -42,4 +50,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
