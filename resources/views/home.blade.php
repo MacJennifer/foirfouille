@@ -1,23 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1>Foir'Fouille</h1>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                @foreach ($productsByCategories as $categorieName => $products)
+                    <div class="category">
+                        <h2>{{ $categorieName }}</h2>
+
+                        <div class="row">
+                            @foreach ($products as $product)
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $product->name }}</h5>
+                                            <p class="card-text">{{ $product->description }}</p>
+                                            <p class="card-text">Prix: {{ $product->price }} €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
-</div>
 @endsection
+
+
+
