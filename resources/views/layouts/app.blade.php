@@ -54,8 +54,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="home">Accueil</a>
-                                    <a class="dropdown-item" href="{{ route('users.edit', Auth::user()) }}">Editer le profil</a>
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Accueil</a>
+
 
                                     @if (Auth::user()->role_id == 2)
                                         <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin</a>

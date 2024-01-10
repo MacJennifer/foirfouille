@@ -16,6 +16,40 @@ class AdminController extends Controller
      {
          return view('admin.dashboard');
      }
+
+     public function categories()
+     {
+         $categories = Categorie::all();
+         return view('admin.categories', compact('categories'));
+     }
+
+     public function editCategorie($id)
+     {
+        $categorie = Categorie::findOrFail($id);
+         return view('admin.editCategorie', compact('categorie'));
+     }
+
+     public function updateCategorie(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $category = Categorie::findOrFail($id);
+        $category->update([
+            'name' => $request->name,
+
+        ]);
+
+        return redirect()->route('admin.dashboard')->with('category-success', 'Catégorie mise à jour avec succès');
+    }
+
+     public function destroyCategorie($id)
+     {
+
+         return redirect()->route('admin.dashboard')->with('categorie-success', 'Catégorie supprimée avec succès');
+     }
+
     public function index()
     {
         $productsByCategories = Product::with('categorie')->get()->groupBy('categorie.name');

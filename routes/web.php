@@ -58,4 +58,11 @@ Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.ed
 Route::put('/admin/products/{id}', [AdminController::class, 'update'])->name('admin.update');
 
 Route::delete('/admin/products/{id}', [AdminController::class, 'destroyProducts'])->name('admin.destroyProducts');
+
+Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
+
+Route::get('/admin/editCategorie/{id}', [AdminController::class, 'editCategorie'])->name('admin.editCategorie');
+Route::put('/admin/updateCategorie/{id}', [AdminController::class, 'updateCategorie'])->name('admin.updateCategorie');
+
+Route::delete('/admin/destroyCategorie/{id}', [AdminController::class, 'destroyCategorie'])->name('admin.destroyCategorie');
 });

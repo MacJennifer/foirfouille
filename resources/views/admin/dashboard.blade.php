@@ -8,6 +8,7 @@
 
         <div class="mb-4">
             <a href="{{ route('admin.create') }}" class="btn btn-success">Nouveau produit</a>
+            <a href="{{ route('admin.categories') }}" class="btn btn-primary">Catégories</a>
         </div>
 
         <div class="row mt-4">
