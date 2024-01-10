@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      *
      */
-    use HasFactory;
+
 
     protected $fillable = [
 
@@ -54,5 +54,9 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+    public function isAdmin()
+    {
+        return $this->role_id == 2;
     }
 }

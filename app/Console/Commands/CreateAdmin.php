@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Hash;
 
 class CreateAdmin extends Command
@@ -27,18 +28,25 @@ class CreateAdmin extends Command
      */
     public function handle()
     {
-
+        $adminRole = Role::where('role', 'admin')->first();
         $email = $this->ask('Enter admin email');
         $password = $this->secret('Enter admin password');
 
+        // Utilisation de la classe User du modèle plutôt que de la classe User du service d'authentification
         $admin = User::create([
-
-            'emaadmin@gmail.comil' => $email,
-            'admin@gmail.com' => Hash::make($password),
-            'role_id' => 1,
+            'email' => $email,
+            'password' => Hash::make($password),
+            'role_id' => 2,
+            'lastname' => 'AdminLastName',
+            'firstname' => 'AdminFirstName',
+            'adress' => 'AdminAddress',
+            'zipcode' => '12345',
+            'city' => 'AdminCity',
         ]);
 
+        $admin->role()->associate($adminRole);
+        $admin->save();
         $this->info('Admin created successfully!');
     }
-    }
+}
 
