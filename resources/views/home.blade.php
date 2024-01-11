@@ -22,6 +22,21 @@
                                                 {{ \Illuminate\Support\Str::limit($product->description, 50, $end = '...') }}
                                             </p>
                                             <p class="card-text">Prix: {{ $product->price }} €</p>
+
+                                            @forelse ($product->promotions as $promotion)
+                                                    <p class="card-text">
+                                                        <span style="background-color: yellow; color: red; padding: 2px 5px; border-radius: 3px;">
+                                                            Prix en promotion: {{ $promotion->pivot->promotionPrice }} €
+                                                        </span>
+                                                        <br>
+                                                        <span>
+                                                            Réduction: {{ $promotion->reduction }} %
+                                                        </span>
+                                                    </p>
+                                                @empty
+                                                    {{-- Aucune promotion --}}
+                                                @endforelse
+
                                             <a href="{{ route('product.show', $product->id) }}" class="btn btn-primary">Voir
                                                 plus</a>
                                         </div>

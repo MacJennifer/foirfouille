@@ -2,22 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class PromotionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    protected $fillable = ['name', 'image', 'description', 'price', 'categorie_id'];
-
     public function index()
     {
-        $productsByCategories = Product::with('promotions')->get();
-
-        $productsByCategories = Product::with('categorie')->get()->groupBy('categorie.name');
-        return view('home', compact('productsByCategories'));
+        //
     }
 
     /**
@@ -31,9 +25,9 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-       //
+        //
     }
 
     /**
@@ -41,8 +35,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-         $product = Product::findOrFail($id);
-        return view('product.show', compact('product'));
+        //
     }
 
     /**

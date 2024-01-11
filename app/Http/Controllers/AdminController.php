@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Categorie;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -189,18 +190,13 @@ class AdminController extends Controller
             // Delete the old image file (optional)
             Storage::delete($product->image);
 
-
             $imagePath = $request->file('image')->store('uploads', 'public');
-
             $imageName = basename($imagePath);
-
 
             $product->image = $imageName;
         }
 
         $product->save();
-
-
 
         return redirect()->route('admin.dashboard')->with('product-success', 'produit mis à jour avec succès');
     }
@@ -226,4 +222,107 @@ class AdminController extends Controller
         // Si ni l'utilisateur ni le héros n'existent, retournez une erreur
         return redirect()->route('admin.dashboard')->with('error', 'Le produit n\'a pas été supprimé');
     }
+
+/*******************  PROMOTIONS  ********************************************************************/
+
+public function promotions()
+{
+    $promotions = Promotion::all();
+    return view('admin.promotions', compact('promotions'));
+}
+
+public function createPromotion()
+{
+    $products = Product::all();
+    return view('admin.createPromotion', compact('products'));
+}
+public function storePromotion(Request $request)
+{
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'reduction' => 'required|numeric',
+        'date_debut' => 'required|date',
+        'date_fin' => 'required|date|after_or_equal:date_debut',
+        'products' => 'required|array'
+
+    ]);
+
+
+    $promotion = Promotion::create([
+        'name' => $request->name,
+        'reduction' => $request->reduction,
+        'date_debut' => $request->date_debut,
+        'date_fin' => $request->date_fin,
+    ]);
+
+    foreach ($request->products as $productId) {
+        // Récupérez le produit et son prix
+        $product = Product::find($productId);
+        $originalPrice = $product->price;
+
+        // Calculez le prix modifié
+        $reduction = $originalPrice * ($request->reduction / 100);
+        $promotionPrice = $originalPrice - $reduction;
+        $promotionPrice = round($promotionPrice, 2);
+
+        // Attachez le produit à la promotion avec le prix modifié
+        $promotion->products()->attach($productId, ['promotionPrice' => $promotionPrice]);
+    }
+    // Redirigez avec un message de succès
+    return redirect()->route('admin.promotions')->with('promotion-success', 'Promotion créée avec succès');
+}
+
+public function editPromotion($id)
+{
+    $promotion = Promotion::findOrFail($id);
+    return view('admin.editPromotion', compact('promotion'));
+}
+
+public function updatePromotion(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'reduction' => 'required|numeric',
+        'date_debut' => 'required|date',
+        'date_fin' => 'required|date|after_or_equal:date_debut',
+        // Ajoutez d'autres règles de validation si nécessaire
+    ]);
+
+    $promotion = Promotion::findOrFail($id);
+
+    $promotion->update([
+        'name' => $request->name,
+        'reduction' => $request->reduction,
+        'date_debut' => $request->date_debut,
+        'date_fin' => $request->date_fin,
+        // Mettez à jour d'autres champs si nécessaire
+    ]);
+
+    foreach ($promotion->products as $product) {
+        $originalPrice = $product->price;
+        $reduction = $originalPrice * ($request->reduction / 100);
+        $promotionPrice = $originalPrice - $reduction;
+        $promotionPrice = round($promotionPrice, 2);
+
+        // Mettez à jour le prix modifié dans la table de liaison
+        $product->promotions()->updateExistingPivot($promotion->id, ['promotionPrice' => $promotionPrice]);
+    }
+
+    // Redirigez avec un message de succès
+    return redirect()->route('admin.promotions')->with('promotion-success', 'Promotion mise à jour avec succès');
+}
+public function destroyPromotion($id)
+{
+    $promotion = Promotion::find($id);
+
+    if ($promotion) {
+        $promotion->delete();
+        return redirect()->route('admin.promotions')->with('success', 'Promotion supprimée avec succès');
+    }
+
+    return redirect()->route('admin.promotions')->with('error', 'La promotion n\'a pas pu être supprimée');
+}
+
+
 }

@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('promotions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image');
-            $table->text('description');
-            $table->string('price');
-            $table->unsignedBigInteger('promotion_id')->nullable();
+            $table->integer('reduction')->default(15);
+            $table->date('date_debut');
+            $table->date('date_fin');
             $table->timestamps();
-
-            $table->foreignId('categorie_id')->constrained();
-            $table->foreign('promotion_id')->references('id')->on('promotions')->onDelete('set null');
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('promotions');
     }
 };

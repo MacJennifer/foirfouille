@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PromotionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,11 @@ Route::get('admin/createCategorie', [AdminController::class, 'createCategorie'])
 Route::post('admin/storeCategorie', [AdminController::class, 'storeCategorie'])->name('admin.storeCategorie');
 
 
-
-
+// Route::resource('admin/promotions', 'Admin\PromotionsController');
+Route::get('/admin/promotions', [AdminController::class, 'promotions'])->name('admin.promotions');
+Route::get('/admin/createPromotion', [AdminController::class, 'createPromotion'])->name('admin.createPromotion');
+Route::post('/admin/storePromotion', [AdminController::class, 'storePromotion'])->name('admin.storePromotion');
+Route::get('/admin/promotions/edit/{id}', [AdminController::class, 'editPromotion'])->name('admin.editPromotion');
+Route::put('/admin/promotions/update/{id}', [AdminController::class, 'updatePromotion'])->name('admin.updatePromotion');
+Route::delete('/admin/promotions/destroy/{id}', [AdminController::class, 'destroyPromotion'])->name('admin.destroyPromotion');
 });
