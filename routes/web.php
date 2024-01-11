@@ -41,7 +41,7 @@ Route::get('/categories', [Categorie::class, 'index'])->name('categories.index')
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
 
-
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
 
 Route::group(['middleware' => 'auth.admin'], function () {
@@ -65,4 +65,13 @@ Route::get('/admin/editCategorie/{id}', [AdminController::class, 'editCategorie'
 Route::put('/admin/updateCategorie/{id}', [AdminController::class, 'updateCategorie'])->name('admin.updateCategorie');
 
 Route::delete('/admin/destroyCategorie/{id}', [AdminController::class, 'destroyCategorie'])->name('admin.destroyCategorie');
+
+
+
+Route::get('admin/createCategorie', [AdminController::class, 'createCategorie'])->name('admin.createCategorie');
+Route::post('admin/storeCategorie', [AdminController::class, 'storeCategorie'])->name('admin.storeCategorie');
+
+
+
+
 });

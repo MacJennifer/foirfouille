@@ -29,9 +29,9 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+       //
     }
 
     /**
@@ -39,7 +39,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+         $product = Product::findOrFail($id);
+        return view('product.show', compact('product'));
     }
 
     /**
