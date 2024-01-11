@@ -3,6 +3,7 @@
 use App\Models\Categorie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PromotionsController;
@@ -36,6 +37,10 @@ Route::post('/logout', function () {
 Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/home', [ProductController::class, 'index']);
 Route::get('/categories', [Categorie::class, 'index'])->name('categories.index');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{productId}', [CartController::class, 'addProduct'])->name('cart.add');
+Route::delete('/cart/remove/{productId}', [CartController::class, 'removeProduct'])->name('cart.remove');
 
 
 // Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');

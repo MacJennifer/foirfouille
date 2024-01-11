@@ -23,7 +23,11 @@
             @empty
                 {{-- Aucune promotion --}}
             @endforelse
-                <a href="#" class="btn btn-success">Ajouter au panier</a>
+            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-success">Ajouter au panier</button>
+            </form>
+            <a href="{{ route('cart.index') }}" class="btn btn-info">Voir le panier</a>
             </div>
         </div>
     </div>
