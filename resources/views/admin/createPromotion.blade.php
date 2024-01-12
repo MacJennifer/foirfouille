@@ -31,11 +31,12 @@
 
             <div class="mb-3">
                 <label for="products" class="form-label">Sélectionnez les produits</label>
-                <select multiple class="form-select" id="products" name="products[]" required>
+
                     @foreach ($products as $product)
-                        <option value="{{ $product->id }}" data-price="{{ $product->price }}">{{ $product->name }}</option>
-                    @endforeach
-                </select>
+                    <input class="form-check-input" type="checkbox" id="product{{ $product->id }}" name="products[]" value="{{ $product->id }}" data-price="{{ $product->price }}">
+                    <label class="form-check-label" for="product{{ $product->id }}">{{ $product->name }}</label><br>
+                @endforeach
+
             </div>
             <button type="submit" class="btn btn-primary">Créer la promotion</button>
         </form>

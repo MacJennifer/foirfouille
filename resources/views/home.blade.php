@@ -4,16 +4,16 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h1>Foir'Fouille</h1>
-
-                {{-- Afficher les produits en promotion --}}
                 <div class="category">
-                    <h2>Produits en Promotion</h2>
+                    @if ($productsByCategories->flatten()->contains(function ($product) {
+                        return $product->promotions->isNotEmpty();
+                    }))
+                    <h2>Produits en promotion</h2>
                     <div class="row">
                         @foreach ($productsByCategories as $products)
                             @foreach ($products as $product)
                                 @if ($product->promotions->isNotEmpty())
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-6 mb-3 mt-5">
                                         <div class="card">
                                             <img src="{{ asset('storage/uploads/' . $product->image) }}" class="card-img-top"
                                                 alt="{{ $product->name }}">
@@ -45,16 +45,19 @@
                             @endforeach
                         @endforeach
                     </div>
+                    @else
+                        <h2>Pas de promotion actuellement</h2>
+                    @endif
                 </div>
 
                 {{-- Boucle pour les catégories --}}
                 @foreach ($productsByCategories as $categorieName => $products)
                     <div class="category">
-                        <h2>{{ $categorieName }}</h2>
+                        <h2 class="mt-5">{{ $categorieName }}</h2>
                         <div class="row">
                             @foreach ($products as $product)
                                 @if ($product->promotions->isEmpty())
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-6 mb-3 mt-5">
                                         <div class="card">
                                             <img src="{{ asset('storage/uploads/' . $product->image) }}" class="card-img-top"
                                                 alt="{{ $product->name }}">

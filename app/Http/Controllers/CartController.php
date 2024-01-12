@@ -12,7 +12,27 @@ class CartController extends Controller
     {
         // Afficher le contenu du panier
         $cart = session('cart', []);
-        return view('cart.index', compact('cart'));
+        $total = $this->total($cart);
+        return view('cart.index', compact('cart', 'total'));
+    }
+
+    public function total($cart)
+    {
+        $total = 0;
+
+        foreach ($cart as $productId => $product) {
+
+            if ($product->promotions->isNotEmpty()) {
+
+                $total += $product->promotions->first()->pivot->promotionPrice;
+            } else {
+                // Utilisez le prix normal
+                $total += $product->price;
+            }
+        }
+
+        return $total;
+
     }
 
     public function show()

@@ -30,7 +30,13 @@
             </div>
 
             <div class="mb-3">
-                <!-- Ajoutez d'autres champs pour les informations de promotion si nécessaire -->
+                <label for="products" class="form-label">Sélectionnez les produits liés à la promotion</label>
+                <div class="form-check">
+                    @foreach ($products as $product)
+                        <input class="form-check-input" type="checkbox" id="product{{ $product->id }}" name="products[]" value="{{ $product->id }}" {{ in_array($product->id, $promotion->products->pluck('id')->toArray()) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="product{{ $product->id }}">{{ $product->name }}</label><br>
+                    @endforeach
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">Modifier la promotion</button>

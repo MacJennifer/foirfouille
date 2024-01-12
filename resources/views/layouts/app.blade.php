@@ -2,6 +2,7 @@
 
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +16,9 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <script src="https://kit.fontawesome.com/45e38e596f.js" crossorigin="anonymous"></script>
+
+
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
     <!-- Scripts -->
@@ -27,6 +31,8 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <!-- ... Votre contenu de la navbar ... -->
             <div class="collapse navbar-collapse" id="navbarNav">
+                <a href="{{ url('/')}}"><img src="{{ asset('images/logo.png')}}" alt="image logo"></a>
+
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Accueil</a>
@@ -37,13 +43,13 @@
                                 <a class="nav-link" href="{{ route('admin.dashboard') }}">Admin</a>
                             </li>
                         @endif
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cart.index') }}">Mon panier</a>
+                        </li>
+                        <li class="nav-item">
 
-                            <form action="{{ route('logout') }}" method="POST" class="nav-link ms-auto">
-                                @csrf
-                                {{-- <button type="submit" class="btn btn-link text-decoration-none">Déconnexion</button> --}}
-                                <a class="nav-link" href="{{ route('logout') }}">Déconnexion</a>
-                            </form>
-
+                            <a class="logout" href="{{ route('logout') }}">Déconnexion</a>
+                        </li>
                     @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Se connecter</a>
@@ -61,4 +67,5 @@
         </main>
     </div>
 </body>
+
 </html>

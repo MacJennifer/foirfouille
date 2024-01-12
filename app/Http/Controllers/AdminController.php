@@ -32,7 +32,7 @@ class AdminController extends Controller
 
         foreach ($categories as $categorie) {
             if (!isset($productsByCategories[$categorie->name])) {
-                $productsByCategories[$categorie->name] = collect(); // Créez une nouvelle collection pour la catégorie
+                $productsByCategories[$categorie->name] = collect();
             }
         }
 
@@ -84,7 +84,6 @@ class AdminController extends Controller
     {
         $categorie = Categorie::find($id);
 
-        // Vérifiez si le héros existe
         if ($categorie) {
             $categorie->delete();
             session()->flash('categorie-success', 'La catégorie a été suppriméé avec succès');
@@ -147,7 +146,6 @@ class AdminController extends Controller
 
         ]);
 
-        // Redirigez avec un message de succès
         return redirect()->route('admin.dashboard')->with('product-success', 'Produit créé avec succès');
     }
 
@@ -181,13 +179,13 @@ class AdminController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->name = $request->input('name');
-        // $hero->image = $request->input('image');
+
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->categorie_id = $request->input('categorie_id');
 
         if ($request->hasFile('image')) {
-            // Delete the old image file (optional)
+
             Storage::delete($product->image);
 
             $imagePath = $request->file('image')->store('uploads', 'public');
@@ -212,14 +210,12 @@ class AdminController extends Controller
     {
         $product = Product::find($id);
 
-        // Vérifiez si le héros existe
         if ($product) {
             $product->delete();
             session()->flash('product-success', 'Le produit a été supprimé avec succès');
             return redirect()->route('admin.dashboard');
         }
 
-        // Si ni l'utilisateur ni le héros n'existent, retournez une erreur
         return redirect()->route('admin.dashboard')->with('error', 'Le produit n\'a pas été supprimé');
     }
 
@@ -257,19 +253,19 @@ public function storePromotion(Request $request)
     ]);
 
     foreach ($request->products as $productId) {
-        // Récupérez le produit et son prix
+
         $product = Product::find($productId);
         $originalPrice = $product->price;
 
-        // Calculez le prix modifié
+
         $reduction = $originalPrice * ($request->reduction / 100);
         $promotionPrice = $originalPrice - $reduction;
-        $promotionPrice = round($promotionPrice, 2);
+        $promotionPrice = number_format($promotionPrice, 2, '.', '');
 
-        // Attachez le produit à la promotion avec le prix modifié
+
         $promotion->products()->attach($productId, ['promotionPrice' => $promotionPrice]);
     }
-    // Redirigez avec un message de succès
+
     return redirect()->route('admin.promotions')->with('promotion-success', 'Promotion créée avec succès');
 }
 
@@ -287,7 +283,7 @@ public function updatePromotion(Request $request, $id)
         'reduction' => 'required|numeric',
         'date_debut' => 'required|date',
         'date_fin' => 'required|date|after_or_equal:date_debut',
-        // Ajoutez d'autres règles de validation si nécessaire
+
     ]);
 
     $promotion = Promotion::findOrFail($id);
@@ -297,7 +293,7 @@ public function updatePromotion(Request $request, $id)
         'reduction' => $request->reduction,
         'date_debut' => $request->date_debut,
         'date_fin' => $request->date_fin,
-        // Mettez à jour d'autres champs si nécessaire
+
     ]);
 
     foreach ($promotion->products as $product) {
@@ -306,11 +302,13 @@ public function updatePromotion(Request $request, $id)
         $promotionPrice = $originalPrice - $reduction;
         $promotionPrice = round($promotionPrice, 2);
 
-        // Mettez à jour le prix modifié dans la table de liaison
-        $product->promotions()->updateExistingPivot($promotion->id, ['promotionPrice' => $promotionPrice]);
-    }
 
-    // Redirigez avec un message de succès
+        $product->promotions()->updateExistingPivot($promotion->id, compact('promotionPrice'));
+    }
+    //Mise à jour de la modification des produits de la promotions
+    $promotion->products()->sync($request->input('products', []));
+
+    // Redirige la route
     return redirect()->route('admin.promotions')->with('promotion-success', 'Promotion mise à jour avec succès');
 }
 public function destroyPromotion($id)

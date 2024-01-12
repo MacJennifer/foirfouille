@@ -1,14 +1,69 @@
-h1{
 
-    color: red;
+#app{
+
+    max-width: 1500px;
+    margin: auto;
 }
 #navbarNav {
 
-    border: 2px solid red;
+
     width: 100%;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
+    font-size: 20px;
+}
+.navbar-nav{
+
+    width: 100%;
+}
+.nav-item{
+
+    text-align: center;
+    width: 100%;
+}
+.logout{
+
+    color: black;
+    text-align: end;
+    text-decoration: none;
+    width: 100%;
+}
+h2{
+    text-align: center;
+    margin-bottom: 50px;
+    width: 100%;
+}
+.container{
+
+    max-width: 1000px;
+}
+.row{
+
+    width: 100%;
+
+}
+.btn{
+
+    margin: 10px 0;
+}
+img{
+
+    width: 150px;
+    height: auto;
+    object-fit: cover;
+
+}
+.img-fluid{
+
+    width: 100%;
+    display: flex;
+
+}
+.total{
+
+    text-align: end;
+    font-size: 20px;
+    font-weight: bold;
 }
