@@ -9,6 +9,16 @@
                         return $product->promotions->isNotEmpty();
                     }))
                     <h2>Produits en promotion</h2>
+                    <form class="form-inline" action="{{ route('product.search') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" class="form-control search-input" name="query" placeholder="Rechercher un produit" aria-label="Rechercher un produit" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit" id="button-addon2">Rechercher</button>
+                            </div>
+                        </div>
+                    </form>
+
+
                     <div class="row">
                         @foreach ($productsByCategories as $products)
                             @foreach ($products as $product)

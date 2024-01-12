@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
@@ -62,4 +63,5 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')->with('success', 'Produit supprimé du panier');
     }
+
 }

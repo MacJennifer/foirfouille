@@ -5,6 +5,7 @@
 @section('content')
     <div class="container mt-5">
         <h1>Panier</h1>
+        <a href="{{ route('products.index') }}" class="btn btn-primary">Retour à mes achats</a>
         @if (count($cart) > 0)
             <table class="table">
                 <thead>

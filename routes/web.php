@@ -53,6 +53,7 @@ Route::delete('/cart/remove/{productId}', [CartController::class, 'removeProduct
 
 Route::get('/cart/show', [CartController::class, 'show'])->name('cart.show');
 
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 /**********************  ADMIN  ****************************************************/
 
 // Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -82,4 +83,8 @@ Route::post('/admin/storePromotion', [AdminController::class, 'storePromotion'])
 Route::get('/admin/promotions/edit/{id}', [AdminController::class, 'editPromotion'])->name('admin.editPromotion');
 Route::put('/admin/promotions/update/{id}', [AdminController::class, 'updatePromotion'])->name('admin.updatePromotion');
 Route::delete('/admin/promotions/destroy/{id}', [AdminController::class, 'destroyPromotion'])->name('admin.destroyPromotion');
+
+/***********************  RECHERCHE  ****************************************/
+
+Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 });

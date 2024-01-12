@@ -296,6 +296,7 @@ public function updatePromotion(Request $request, $id)
 
     ]);
 
+    $promotion->products()->sync($request->input('products', []));
     foreach ($promotion->products as $product) {
         $originalPrice = $product->price;
         $reduction = $originalPrice * ($request->reduction / 100);

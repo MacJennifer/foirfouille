@@ -30,7 +30,13 @@
     text-decoration: none;
     width: 100%;
 }
-h2{
+h1{
+
+    text-align: center;
+    margin-bottom: 50px;
+    width: 100%;
+}
+h2 {
     text-align: center;
     margin-bottom: 50px;
     width: 100%;
@@ -67,3 +73,13 @@ img{
     font-size: 20px;
     font-weight: bold;
 }
+
+.search-input {
+    margin-top: 20px;
+    height: 38px;
+}
+#button-addon2{
+
+    margin-top: 20px;
+}
+
