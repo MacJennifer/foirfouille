@@ -14,10 +14,10 @@ class ProductController extends Controller
 
     public function index()
     {
-        $productsByCategories = Product::with('promotions')->get();
+        $productPromotion = Product::with('promotions')->get();
 
         $productsByCategories = Product::with('categorie')->get()->groupBy('categorie.name');
-        return view('home', compact('productsByCategories'));
+        return view('home', compact('productsByCategories', 'productPromotion'));
     }
 
     /**

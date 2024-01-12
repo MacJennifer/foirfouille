@@ -18,10 +18,14 @@ use App\Http\Controllers\PromotionsController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+/***********************  ACCUEIL **********************************************/
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/', [ProductController::class, 'index'])->name('home');
+Route::get('/home', [ProductController::class, 'index']);
+Route::get('/categories', [Categorie::class, 'index'])->name('categories.index');
 
 Auth::routes();
 
@@ -29,56 +33,49 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::resource('/users', App\Http\Controllers\UserController::class)->except('index', 'create', 'store');
 
+/***********  Deconnection  *************************************************/
+
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');
 })->name('logout');
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
 
-Route::get('/', [ProductController::class, 'index'])->name('home');
-Route::get('/home', [ProductController::class, 'index']);
-Route::get('/categories', [Categorie::class, 'index'])->name('categories.index');
+/***********************  PANIER  ***********************************************/
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
 Route::post('/cart/add/{productId}', [CartController::class, 'addProduct'])->name('cart.add');
 Route::delete('/cart/remove/{productId}', [CartController::class, 'removeProduct'])->name('cart.remove');
 
+Route::get('/cart/show', [CartController::class, 'show'])->name('cart.show');
 
-// Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+/**********************  ADMIN  ****************************************************/
 
-
+// Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
-
 Route::group(['middleware' => 'auth.admin'], function () {
-
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-
-    Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
 Route::post('/admin/storeProduct', [AdminController::class, 'storeProduct'])->name('admin.storeProduct');
-
 Route::get('/admin/storeProduct', [AdminController::class, 'storeProduct'])->name('admin.storeProduct');
-
 Route::put('/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
 Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
 Route::put('/admin/products/{id}', [AdminController::class, 'update'])->name('admin.update');
-
 Route::delete('/admin/products/{id}', [AdminController::class, 'destroyProducts'])->name('admin.destroyProducts');
-
 Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
-
 Route::get('/admin/editCategorie/{id}', [AdminController::class, 'editCategorie'])->name('admin.editCategorie');
 Route::put('/admin/updateCategorie/{id}', [AdminController::class, 'updateCategorie'])->name('admin.updateCategorie');
-
 Route::delete('/admin/destroyCategorie/{id}', [AdminController::class, 'destroyCategorie'])->name('admin.destroyCategorie');
-
-
-
 Route::get('admin/createCategorie', [AdminController::class, 'createCategorie'])->name('admin.createCategorie');
 Route::post('admin/storeCategorie', [AdminController::class, 'storeCategorie'])->name('admin.storeCategorie');
 
+/****************************************  PROMOTION  *********************************************************/
 
-// Route::resource('admin/promotions', 'Admin\PromotionsController');
 Route::get('/admin/promotions', [AdminController::class, 'promotions'])->name('admin.promotions');
 Route::get('/admin/createPromotion', [AdminController::class, 'createPromotion'])->name('admin.createPromotion');
 Route::post('/admin/storePromotion', [AdminController::class, 'storePromotion'])->name('admin.storePromotion');

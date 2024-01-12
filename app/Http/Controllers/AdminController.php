@@ -276,7 +276,8 @@ public function storePromotion(Request $request)
 public function editPromotion($id)
 {
     $promotion = Promotion::findOrFail($id);
-    return view('admin.editPromotion', compact('promotion'));
+    $products = Product::All();
+    return view('admin.editPromotion', compact('promotion', 'products'));
 }
 
 public function updatePromotion(Request $request, $id)

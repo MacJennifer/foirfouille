@@ -15,6 +15,13 @@ class CartController extends Controller
         return view('cart.index', compact('cart'));
     }
 
+    public function show()
+    {
+        $cart = session('cart', []);
+        return view('cart.show', compact('cart'));
+
+    }
+
     public function addProduct($productId)
     {
         // Ajouter un produit au panier

@@ -19,7 +19,6 @@
                 <label for="reduction" class="form-label">Réduction en pourcentage</label>
                 <input type="number" class="form-control" id="reduction" name="reduction" value="{{ $promotion->reduction }}" required>
             </div>
-
             <div class="mb-3">
                 <label for="date_debut" class="form-label">Date de début</label>
                 <input type="date" class="form-control" id="date_debut" name="date_debut" value="{{ $promotion->date_debut }}" required>

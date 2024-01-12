@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>FoirFouille</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -37,12 +37,13 @@
                                 <a class="nav-link" href="{{ route('admin.dashboard') }}">Admin</a>
                             </li>
                         @endif
-                        <li class="nav-item">
+
                             <form action="{{ route('logout') }}" method="POST" class="nav-link ms-auto">
                                 @csrf
-                                <button type="submit" class="btn btn-link text-decoration-none">Déconnexion</button>
+                                {{-- <button type="submit" class="btn btn-link text-decoration-none">Déconnexion</button> --}}
+                                <a class="nav-link" href="{{ route('logout') }}">Déconnexion</a>
                             </form>
-                        </li>
+
                     @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Se connecter</a>
