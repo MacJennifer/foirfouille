@@ -39,7 +39,7 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('productsByCategories', 'categories'));
     }
 
-/********************  CATEGORIE  **************************************************************/
+    /********************  CATEGORIE  **************************************************************/
 
     public function createCategorie()
     {
@@ -94,7 +94,7 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('categorie-success', 'Catégorie supprimée avec succès');
     }
 
-/*************************  PRODUCT  ********************************************************************/
+    /*************************  PRODUCT  ********************************************************************/
 
     /**
      * Show the form for creating a new resource.
@@ -219,110 +219,109 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('error', 'Le produit n\'a pas été supprimé');
     }
 
-/*******************  PROMOTIONS  ********************************************************************/
+    /*******************  PROMOTIONS  ********************************************************************/
 
-public function promotions()
-{
-    $promotions = Promotion::all();
-    return view('admin.promotions', compact('promotions'));
-}
-
-public function createPromotion()
-{
-    $products = Product::all();
-    return view('admin.createPromotion', compact('products'));
-}
-public function storePromotion(Request $request)
-{
-
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'reduction' => 'required|numeric',
-        'date_debut' => 'required|date',
-        'date_fin' => 'required|date|after_or_equal:date_debut',
-        'products' => 'required|array'
-
-    ]);
-
-
-    $promotion = Promotion::create([
-        'name' => $request->name,
-        'reduction' => $request->reduction,
-        'date_debut' => $request->date_debut,
-        'date_fin' => $request->date_fin,
-    ]);
-
-    foreach ($request->products as $productId) {
-
-        $product = Product::find($productId);
-        $originalPrice = $product->price;
-
-
-        $reduction = $originalPrice * ($request->reduction / 100);
-        $promotionPrice = $originalPrice - $reduction;
-        $promotionPrice = number_format($promotionPrice, 2, '.', '');
-
-
-        $promotion->products()->attach($productId, ['promotionPrice' => $promotionPrice]);
+    public function promotions()
+    {
+        $promotions = Promotion::all();
+        return view('admin.promotions', compact('promotions'));
     }
 
-    return redirect()->route('admin.promotions')->with('promotion-success', 'Promotion créée avec succès');
-}
-
-public function editPromotion($id)
-{
-    $promotion = Promotion::findOrFail($id);
-    $products = Product::All();
-    return view('admin.editPromotion', compact('promotion', 'products'));
-}
-
-public function updatePromotion(Request $request, $id)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'reduction' => 'required|numeric',
-        'date_debut' => 'required|date',
-        'date_fin' => 'required|date|after_or_equal:date_debut',
-
-    ]);
-
-    $promotion = Promotion::findOrFail($id);
-
-    $promotion->update([
-        'name' => $request->name,
-        'reduction' => $request->reduction,
-        'date_debut' => $request->date_debut,
-        'date_fin' => $request->date_fin,
-
-    ]);
-
-    $promotion->products()->sync($request->input('products', []));
-    foreach ($promotion->products as $product) {
-        $originalPrice = $product->price;
-        $reduction = $originalPrice * ($request->reduction / 100);
-        $promotionPrice = $originalPrice - $reduction;
-        $promotionPrice = round($promotionPrice, 2);
-
-
-        $product->promotions()->updateExistingPivot($promotion->id, compact('promotionPrice'));
+    public function createPromotion()
+    {
+        $products = Product::all();
+        return view('admin.createPromotion', compact('products'));
     }
-    //Mise à jour de la modification des produits de la promotions
-    $promotion->products()->sync($request->input('products', []));
+    public function storePromotion(Request $request)
+    {
 
-    // Redirige la route
-    return redirect()->route('admin.promotions')->with('promotion-success', 'Promotion mise à jour avec succès');
-}
-public function destroyPromotion($id)
-{
-    $promotion = Promotion::find($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'reduction' => 'required|numeric',
+            'date_debut' => 'required|date',
+            'date_fin' => 'required|date|after_or_equal:date_debut',
+            'products' => 'required|array'
 
-    if ($promotion) {
-        $promotion->delete();
-        return redirect()->route('admin.promotions')->with('success', 'Promotion supprimée avec succès');
+        ]);
+
+
+        $promotion = Promotion::create([
+            'name' => $request->name,
+            'reduction' => $request->reduction,
+            'date_debut' => $request->date_debut,
+            'date_fin' => $request->date_fin,
+        ]);
+
+        foreach ($request->products as $productId) {
+
+            $product = Product::find($productId);
+            $originalPrice = $product->price;
+
+
+            $reduction = $originalPrice * ($request->reduction / 100);
+            $promotionPrice = $originalPrice - $reduction;
+            $promotionPrice = number_format($promotionPrice, 2, '.', '');
+
+
+            $promotion->products()->attach($productId, ['promotionPrice' => $promotionPrice]);
+        }
+
+        return redirect()->route('admin.promotions')->with('promotion-success', 'Promotion créée avec succès');
     }
 
-    return redirect()->route('admin.promotions')->with('error', 'La promotion n\'a pas pu être supprimée');
-}
+    public function editPromotion($id)
+    {
+        $promotion = Promotion::findOrFail($id);
+        $products = Product::All();
+        return view('admin.editPromotion', compact('promotion', 'products'));
+    }
+
+    public function updatePromotion(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'reduction' => 'required|numeric',
+            'date_debut' => 'required|date',
+            'date_fin' => 'required|date|after_or_equal:date_debut',
+
+        ]);
+
+        $promotion = Promotion::findOrFail($id);
+
+        $promotion->update([
+            'name' => $request->name,
+            'reduction' => $request->reduction,
+            'date_debut' => $request->date_debut,
+            'date_fin' => $request->date_fin,
+
+        ]);
+
+        $promotion->products()->sync($request->input('products', []));
+
+        foreach ($promotion->products as $product) {
+            $originalPrice = $product->price;
+            $reduction = $originalPrice * ($request->reduction / 100);
+            $promotionPrice = $originalPrice - $reduction;
+            $promotionPrice =  number_format($promotionPrice, 2, '.', '');
 
 
+            $product->promotions()->updateExistingPivot($promotion->id, compact('promotionPrice'));
+        }
+        //Mise à jour de la modification des produits de la promotions
+        $promotion->products()->sync($request->input('products', []));
+
+        // Redirige la route
+        return redirect()->route('admin.promotions')->with('promotion-success', 'Promotion mise à jour avec succès');
+    }
+    public function destroyPromotion($id)
+    {
+        $promotion = Promotion::find($id);
+
+        if ($promotion) {
+            $promotion->delete();
+            return redirect()->route('admin.promotions')->with('success', 'Promotion supprimée avec succès');
+        }
+
+        return redirect()->route('admin.promotions')->with('error', 'La promotion n\'a pas pu être supprimée');
+    }
 }

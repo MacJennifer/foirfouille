@@ -1,85 +1,112 @@
-
-#app{
-
-    max-width: 1500px;
-    margin: auto;
+#app {
+  max-width: 1500px;
+  margin: auto;
 }
-#navbarNav {
-
-
-    width: 100%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
+#app #navbarNav {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
 }
-.navbar-nav{
-
-    width: 100%;
+#app .navbar-nav {
+  width: 100%;
 }
-.nav-item{
-
-    text-align: center;
-    width: 100%;
+#app .nav-item {
+  text-align: center;
+  width: 100%;
 }
-.logout{
-
-    color: black;
-    text-align: end;
-    text-decoration: none;
-    width: 100%;
+#app .logout {
+  color: black;
+  text-align: end;
+  text-decoration: none;
+  width: 100%;
 }
-h1{
-
-    text-align: center;
-    margin-bottom: 50px;
-    width: 100%;
+#app .container {
+  max-width: 1000px;
+  margin: auto;
 }
-h2 {
-    text-align: center;
-    margin-bottom: 50px;
-    width: 100%;
+#app .container h1 {
+  text-align: center;
+  margin-bottom: 50px;
+  width: 100%;
+  font-weight: bold;
 }
-.container{
-
-    max-width: 1000px;
+#app .container h2 {
+  text-align: center;
+  margin: 20px 0;
+  width: 100%;
+  font-weight: bold;
 }
-.row{
-
-    width: 100%;
-
+#app .container h5 {
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
 }
-.btn{
-
-    margin: 10px 0;
+#app .container .row {
+  width: 100%;
 }
-img{
-
-    width: 150px;
-    height: auto;
-    object-fit: cover;
-
+#app .container .btn {
+  margin: 10px 0;
 }
-.img-fluid{
-
-    width: 100%;
-    display: flex;
-
+#app .container .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.2117647059);
 }
-.total{
-
-    text-align: end;
-    font-size: 20px;
-    font-weight: bold;
+#app .container .card .card-img-top-home {
+  width: 285px;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-top: 20px;
 }
-
-.search-input {
-    margin-top: 20px;
-    height: 38px;
+#app .container .card .card-img-top {
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-top: 20px;
 }
-#button-addon2{
-
-    margin-top: 20px;
+#app .container .img-fluid {
+  width: 100%;
+  display: flex;
 }
-
+#app .container .total {
+  text-align: end;
+  font-size: 20px;
+  font-weight: bold;
+}
+#app .container .search-input {
+  margin-top: 20px;
+  height: 38px;
+}
+#app .container #button-addon2 {
+  margin-top: 20px;
+}
+#app .img-thumbnail {
+  width: 100px;
+}
+#app .btnProductModif {
+  text-decoration: none;
+  color: blue;
+  font-weight: bold;
+  font-size: 15px;
+}
+#app .btnProductSup {
+  text-decoration: none;
+  color: red;
+  font-weight: bold;
+  font-size: 15px;
+}
+#app footer {
+  width: 100%;
+  height: 150px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}/*# sourceMappingURL=styles.css.map */

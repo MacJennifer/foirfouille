@@ -1,0 +1,120 @@
+#app {
+    max-width: 1500px;
+    margin: auto;
+
+    #navbarNav {
+        width: 100%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+    }
+    .navbar-nav {
+        width: 100%;
+    }
+    .nav-item {
+        text-align: center;
+        width: 100%;
+    }
+    .logout {
+        color: black;
+        text-align: end;
+        text-decoration: none;
+        width: 100%;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: auto;
+
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+            width: 100%;
+            font-weight: bold;
+        }
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+            width: 100%;
+            font-weight: bold;
+        }
+        h5 {
+            text-align: center;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .row {
+            width: 100%;
+        }
+        .btn {
+            margin: 10px 0;
+        }
+        .card {
+            // width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 1px 3px 3px #00000036;
+
+            .card-img-top-home {
+                width: 285px;
+                height: auto;
+                object-fit: cover;
+                margin-top: 20px;
+            }
+
+            .card-img-top {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                margin-top: 20px;
+            }
+        }
+
+        .img-fluid {
+            width: 100%;
+            display: flex;
+        }
+        .total {
+            text-align: end;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .search-input {
+            margin-top: 20px;
+            height: 38px;
+        }
+        #button-addon2 {
+            margin-top: 20px;
+        }
+    }
+
+    .img-thumbnail {
+        width: 100px;
+    }
+    .btnProductModif {
+        text-decoration: none;
+        color: blue;
+        font-weight: bold;
+        font-size: 15px;
+    }
+    .btnProductSup {
+        text-decoration: none;
+        color: red;
+        font-weight: bold;
+        font-size: 15px;
+    }
+    footer {
+        width: 100%;
+        height: 150px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+}

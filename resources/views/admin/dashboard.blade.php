@@ -41,7 +41,8 @@
 
                                                 @forelse ($product->promotions as $promotion)
                                                     <p class="card-text">
-                                                        <span style="background-color: yellow; color: red; padding: 2px 5px; border-radius: 3px;">
+                                                        <span
+                                                            style="background-color: yellow; color: red; padding: 2px 5px; border-radius: 3px;">
                                                             Prix en promotion: {{ $promotion->pivot->promotionPrice }} €
                                                         </span>
                                                         <br>
@@ -55,13 +56,9 @@
 
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <a href="{{ route('admin.edit', $product->id) }}"
-                                                        class="btn btn-primary">Modifier</a>
-                                                    <form action="{{ route('admin.destroyProducts', $product->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                    </form>
+                                                        class="btnProductModif">Modifier</a>
+                                                    <a href="{{ route('admin.destroyProducts', $product->id) }}"
+                                                        class="btnProductSup">supprimer</a>
                                                 </div>
                                             </div>
                                         </div>
